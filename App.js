@@ -27,8 +27,6 @@ export default class App extends React.Component {
         Contacts.Fields.Image
       ]
     });
-
-    console.log(data);
     this.setState({ contacts: data, isLoading: false });
   };
   componentDidMount() {
