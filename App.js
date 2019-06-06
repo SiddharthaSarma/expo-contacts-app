@@ -38,13 +38,14 @@ export default class App extends React.Component {
     return (
       <View>
         <Header
-          centerComponent={{ text: 'Contacts', style: { color: '#fff' } }}
+          centerComponent={{ text: 'CONTACTS', style: { color: '#fff' } }}
         />
         <ScrollView>
           <View>
             {this.state.contacts.map((l, i) => (
               <ListItem
                 key={i}
+                leftAvatar={{ source: { uri: l.image ? l.image.uri : null } }}
                 title={l.firstName + ' ' + l.lastName}
                 subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
                 bottomDivider
