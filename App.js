@@ -1,12 +1,12 @@
 import { Contacts } from 'expo';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Header, ListItem } from 'react-native-elements';
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      loading: true,
+      isLoading: true,
       contacts: []
     };
   }
@@ -40,29 +40,24 @@ export default class App extends React.Component {
         <Header
           centerComponent={{ text: 'CONTACTS', style: { color: '#fff' } }}
         />
-        <ScrollView>
-          <View>
-            {this.state.contacts.map((l, i) => (
-              <ListItem
-                key={i}
-                leftAvatar={{ source: { uri: l.image ? l.image.uri : null } }}
-                title={l.firstName + ' ' + l.lastName}
-                subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
-                bottomDivider
-              />
-            ))}
-          </View>
-        </ScrollView>
+        {this.state.isLoading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <ScrollView>
+            <View>
+              {this.state.contacts.map((l, i) => (
+                <ListItem
+                  key={i}
+                  leftAvatar={{ source: { uri: l.image ? l.image.uri : null } }}
+                  title={l.firstName + ' ' + l.lastName}
+                  subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
+                  bottomDivider
+                />
+              ))}
+            </View>
+          </ScrollView>
+        )}
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
