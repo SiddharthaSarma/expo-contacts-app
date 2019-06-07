@@ -47,7 +47,7 @@ export default class App extends React.Component {
                 <ListItem
                   key={i}
                   leftAvatar={{ source: { uri: l.image ? l.image.uri : null } }}
-                  title={l.firstName + ' ' + l.lastName}
+                  title={l.firstName + `${l.lastName ? l.lastName : ''}`}
                   subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
                   bottomDivider
                 />
