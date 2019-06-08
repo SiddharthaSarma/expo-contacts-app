@@ -34,24 +34,29 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Header
           centerComponent={{ text: 'CONTACTS', style: { color: '#fff' } }}
         />
         {this.state.isLoading ? (
-          <ActivityIndicator size="large" />
+          <ActivityIndicator style={{ flex: 1 }} size="large" />
         ) : (
           <ScrollView>
             <View>
-              {this.state.contacts.map((l, i) => (
-                <ListItem
-                  key={i}
-                  leftAvatar={{ source: { uri: l.image ? l.image.uri : null } }}
-                  title={l.firstName + `${l.lastName ? l.lastName : ''}`}
-                  subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
-                  bottomDivider
-                />
-              ))}
+              {this.state.contacts
+                .filter(e => e.firstName)
+                .map((l, i) => (
+                  <ListItem
+                    key={i}
+                    leftAvatar={{
+                      source: { uri: l.image ? l.image.uri : null },
+                      title: l.firstName.slice(0, 2)
+                    }}
+                    title={l.firstName + `${l.lastName ? l.lastName : ''}`}
+                    subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
+                    bottomDivider
+                  />
+                ))}
             </View>
           </ScrollView>
         )}
