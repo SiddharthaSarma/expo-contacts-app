@@ -1,7 +1,8 @@
 import { Contacts } from 'expo';
 import React from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, Linking, ScrollView, View } from 'react-native';
 import { Header, ListItem } from 'react-native-elements';
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -32,6 +33,9 @@ export default class App extends React.Component {
   componentDidMount() {
     this.loadContacts();
   }
+  openPhoneApp(e) {
+    Linking.openURL(`tel:${e.phoneNumbers[0].number}`);
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -44,7 +48,8 @@ export default class App extends React.Component {
           <ScrollView>
             <View>
               {this.state.contacts
-                .filter(e => e.firstName)
+                .filter(e => e.firstName && e.phoneNumbers)
+                .sort((a, b) => a.firstName.localeCompare(b.firstName))
                 .map((l, i) => (
                   <ListItem
                     key={i}
@@ -55,6 +60,7 @@ export default class App extends React.Component {
                     title={l.firstName + `${l.lastName ? l.lastName : ''}`}
                     subtitle={l.phoneNumbers ? l.phoneNumbers[0].number : ' '}
                     bottomDivider
+                    onPress={() => this.openPhoneApp(l)}
                   />
                 ))}
             </View>
